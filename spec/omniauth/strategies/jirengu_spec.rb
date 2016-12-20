@@ -1,15 +1,15 @@
 require 'spec_helper'
 
-describe OmniAuth::Strategies::GitHub do
-  let(:access_token) { stub('AccessToken', :options => {}) }
-  let(:parsed_response) { stub('ParsedResponse') }
-  let(:response) { stub('Response', :parsed => parsed_response) }
+describe OmniAuth::Strategies::Jirengu do
+  let(:access_token) { double('AccessToken', :options => {}) }
+  let(:parsed_response) { double('ParsedResponse') }
+  let(:response) { double('Response', :parsed => parsed_response) }
 
   let(:enterprise_site)          { 'https://some.other.site.com/api/v3' }
   let(:enterprise_authorize_url) { 'https://some.other.site.com/login/oauth/authorize' }
   let(:enterprise_token_url)     { 'https://some.other.site.com/login/oauth/access_token' }
   let(:enterprise) do
-    OmniAuth::Strategies::GitHub.new('GITHUB_KEY', 'GITHUB_SECRET',
+    OmniAuth::Strategies::Jirengu.new('JIRENGU_KEY', 'JIRENGU_SECRET',
         {
             :client_options => {
                 :site => enterprise_site,
@@ -21,24 +21,24 @@ describe OmniAuth::Strategies::GitHub do
   end
 
   subject do
-    OmniAuth::Strategies::GitHub.new({})
+    OmniAuth::Strategies::Jirengu.new({})
   end
 
   before(:each) do
-    subject.stub!(:access_token).and_return(access_token)
+    subject.stub(:access_token).and_return(access_token)
   end
 
   context "client options" do
     it 'should have correct site' do
-      subject.options.client_options.site.should eq("https://api.github.com")
+      subject.options.client_options.site.should eq("http://user.jirengu.com")
     end
 
     it 'should have correct authorize url' do
-      subject.options.client_options.authorize_url.should eq('https://github.com/login/oauth/authorize')
+      subject.options.client_options.authorize_url.should eq('http://user.jirengu.com/oauth/authorize')
     end
 
     it 'should have correct token url' do
-      subject.options.client_options.token_url.should eq('https://github.com/login/oauth/access_token')
+      subject.options.client_options.token_url.should eq('http://user.jirengu.com/oauth/token')
     end
 
     describe "should be overrideable" do
@@ -85,12 +85,12 @@ describe OmniAuth::Strategies::GitHub do
 
   context "#email" do
     it "should return email from raw_info if available" do
-      subject.stub!(:raw_info).and_return({'email' => 'you@example.com'})
+      subject.stub(:raw_info).and_return({'email' => 'you@example.com'})
       subject.email.should eq('you@example.com')
     end
 
     it "should return nil if there is no raw_info and email access is not allowed" do
-      subject.stub!(:raw_info).and_return({})
+      subject.stub(:raw_info).and_return({})
       subject.email.should be_nil
     end
 
@@ -99,9 +99,9 @@ describe OmniAuth::Strategies::GitHub do
         { 'email' => 'secondary@example.com', 'primary' => false },
         { 'email' => 'primary@example.com',   'primary' => true }
       ]
-      subject.stub!(:raw_info).and_return({})
+      subject.stub(:raw_info).and_return({})
       subject.options['scope'] = 'user'
-      subject.stub!(:emails).and_return(emails)
+      subject.stub(:emails).and_return(emails)
       subject.email.should eq(nil)
     end
 
@@ -110,9 +110,9 @@ describe OmniAuth::Strategies::GitHub do
         { 'email' => 'first@example.com',   'primary' => false },
         { 'email' => 'second@example.com',  'primary' => false }
       ]
-      subject.stub!(:raw_info).and_return({})
+      subject.stub(:raw_info).and_return({})
       subject.options['scope'] = 'user'
-      subject.stub!(:emails).and_return(emails)
+      subject.stub(:emails).and_return(emails)
       subject.email.should eq(nil)
     end
   end

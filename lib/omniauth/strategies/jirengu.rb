@@ -4,9 +4,9 @@ module OmniAuth
   module Strategies
     class Jirengu < OmniAuth::Strategies::OAuth2
       option :client_options, {
-        :site => 'https://user.jirengu.com',
-        :authorize_url => 'https://github.com/login/oauth/authorize',
-        :token_url => 'https://github.com/login/oauth/access_token'
+        :site => 'http://user.jirengu.com',
+        :authorize_url => 'http://user.jirengu.com/oauth/authorize',
+        :token_url => 'http://user.jirengu.com/oauth/token'
       }
 
       def request_phase
