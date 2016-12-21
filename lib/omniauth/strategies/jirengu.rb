@@ -23,18 +23,20 @@ module OmniAuth
         end
       end
 
-      uid { raw_info['id'].to_s }
+      uid { raw_info['uid'].to_s }
 
       info do
         {
-          'nickname' => raw_info['login'],
+          'nickname' => raw_info['name'],
+          'name' => raw_info['real_name'],
+          'image' => raw_info['avatar'],
           'email' => raw_info['email'],
-          'name' => raw_info['name'],
-          'image' => raw_info['avatar_url'],
-          'urls' => {
-            'GitHub' => raw_info['html_url'],
-            'Blog' => raw_info['blog'],
-          },
+          'gender' => raw_info['gender'],
+          'birthday' => raw_info['bitrhday'],
+          'school' => raw_info['school'],
+          'location' => raw_info['location'],
+          'company' => raw_info['company'],
+          'bio' => raw_info['bio']
         }
       end
 
