@@ -40,7 +40,7 @@ module OmniAuth
 
       def raw_info
         access_token.options[:mode] = :query
-        @raw_info ||= access_token.get('me.json').parsed
+        @raw_info ||= access_token.get('/api/v1/me.json').parsed
       end
 
       def email
