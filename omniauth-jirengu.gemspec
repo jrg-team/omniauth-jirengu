@@ -3,7 +3,7 @@ require File.expand_path('../lib/omniauth-jirengu/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.authors       = ["Frank Fang"]
-  gem.email         = ["frankfang1990@gmail.com"]
+  gem.email         = ["frankfang128@gmail.com"]
   gem.description   = %q{OmniAuth strategy for JiRenGu.}
   gem.summary       = %q{OmniAuth strategy for JiRenGu.}
   gem.homepage      = "https://github.com/jrg-team/omniauth-jirengu"
